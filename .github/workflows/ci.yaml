@@ -10,7 +10,9 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - run: |
-          sudo git clone --depth=1 -b 19.03 https://github.com/khs1994-docker/lnmp /data/lnmp
+          sudo mkdir -p /data
+          sudo chown `id -u`:`id -g` -R /data
+          git clone --depth=1 -b 19.03 https://github.com/khs1994-docker/lnmp /data/lnmp
       - env:
           LNMP_PATH: /data/lnmp
         run: |
