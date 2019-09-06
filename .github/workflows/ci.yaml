@@ -11,13 +11,14 @@ jobs:
       - uses: actions/checkout@master
       - run: |
           sudo git clone --depth=1 -b 19.03 https://github.com/khs1994-docker/lnmp /data/lnmp
-          ls /data/lnmp
       - env:
           LNMP_PATH: /data/lnmp
         run: |
           set -x
           export PATH=$LNMP_PATH:$LNMP_PATH/bin:$PATH
 
+          QUITE=true lnmp-docker
+          QUITE=true lnmp-docker compose --official
           lnmp-laravel new .
       - name: Up
         env:
@@ -28,7 +29,7 @@ jobs:
 
           lnmp-php artisan -V
           docker buildx build --target=laravel -t khs1994/laravel:6.0 -f Dockerfile.buildkit .
-          export LNMP_SERVICES="laravel nginx mysql php7 redis phpmyadmin"
+          export LNMP_SERVICES="laravel nginx mysql php7 redis"
           export LREW_INCLUDE="laravel"
           lnmp-docker up
       - name: Connect
