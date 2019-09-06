@@ -33,9 +33,14 @@ jobs:
           cp -r laravel-demo/{.dockerignore,Dockerfile,Dockerfile.buildkit} laravel/
           ls -la laravel
       - name: test
+        env:
+          LNMP_PATH: /data/lnmp
         run: |
           set -x
           cd ../laravel
+
+          export PATH=$LNMP_PATH:$LNMP_PATH/bin:$PATH
+
           lnmp-php artisan -V
           echo "Test Laravel"
       - name: Build Docker Image
@@ -51,6 +56,7 @@ jobs:
         run: |
           set -x
           export PATH=$LNMP_PATH:$LNMP_PATH/bin:$PATH
+
           export LNMP_SERVICES="laravel nginx mysql php7 redis"
           export LREW_INCLUDE="laravel"
 
