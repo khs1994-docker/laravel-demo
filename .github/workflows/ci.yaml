@@ -26,9 +26,11 @@ jobs:
           QUITE=true lnmp-docker compose --official
           docker-compose --version
 
+          lnmp-composer config -g --unset repos.packagist
+
           cd ..
           lnmp-laravel-by-composer new laravel 6.0
-          cp -r laravel-demo/ laravel/
+          cp -r laravel-demo/{.dockerignore,Dockerfile,Dockerfile.buildkit} laravel/
           ls -la laravel
           cd laravel
       - name: Up
