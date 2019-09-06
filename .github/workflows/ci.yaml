@@ -35,7 +35,7 @@ jobs:
           lnmp-laravel-by-composer new laravel 6.0
           cp -r laravel-demo/{.dockerignore,Dockerfile,Dockerfile.buildkit} laravel/
           ls -la laravel
-      - name: test
+      - name: Test Laravel
         env:
           LNMP_PATH: /data/lnmp
         run: |
@@ -63,6 +63,7 @@ jobs:
           export LNMP_SERVICES="laravel nginx mysql php7 redis"
           export LREW_INCLUDE="laravel"
 
+          sudo systemctl stop mysql
           lnmp-docker up
       - name: Connect
         run: |
