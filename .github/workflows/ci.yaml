@@ -40,6 +40,8 @@ jobs:
           set -x
           export PATH=$LNMP_PATH:$LNMP_PATH/bin:$PATH
 
+          ls -la
+          cd ../laravel
           lnmp-php artisan -V
           docker buildx build --load --target=laravel -t khs1994/laravel:6.0 -f Dockerfile.buildkit .
           export LNMP_SERVICES="laravel nginx mysql php7 redis"
