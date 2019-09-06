@@ -23,7 +23,8 @@ jobs:
           QUITE=true lnmp-docker compose --official
           docker-compose --version
 
-          lnmp-laravel new --force .
+          composer global require laravel/installer
+          laravel new --force .
       - name: Up
         env:
           LNMP_PATH: /data/lnmp
