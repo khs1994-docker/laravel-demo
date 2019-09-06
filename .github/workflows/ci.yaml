@@ -1,0 +1,31 @@
+on:
+  push:
+
+name: CI
+
+jobs:
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@master
+      - run: |
+          sudo git clone --depth=1 -b 19.03 http://github.com/khs1994-docker/lnmp /data/lnmp
+          export LNMP_PATH=/data/lnmp
+          export PATH=$LNMP_PATH:$LNMP_PATH/bin:$PATH
+      - run: |
+          lnmp-laravel new .
+      - name: Up
+        run: |
+          set -x
+          lnmp-php artisan -V
+          docker buildx build --target=laravel -t khs1994/laravel:6.0 -f Dockerfile.buildkit .
+          export LNMP_SERVICES="laravel nginx mysql php7 redis phpmyadmin"
+          export LREW_INCLUDE="laravel"
+          lnmp-docker up
+      - name: Connect
+        run: |
+          set -x
+          sleep 30
+          docker ps -a
+          curl -k https://laravel-docker.t.khs1994.com
