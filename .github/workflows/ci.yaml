@@ -1,5 +1,6 @@
 on:
   push:
+  pull_request:
 
 name: CI
 
@@ -25,8 +26,11 @@ jobs:
           QUITE=true lnmp-docker compose --official
           docker-compose --version
 
-          composer global require laravel/installer
-          laravel new -n -q --force .
+          cd ..
+          lnmp-laravel-by-composer new laravel 6.0
+          cp -r laravel-demo/ laravel/
+          ls -la laravel
+          cd laravel
       - name: Up
         env:
           LNMP_PATH: /data/lnmp
