@@ -10,12 +10,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@master
-      - run: |
+      - uses: docker-practice/actions-setup-docker
+      - name: Setup lnmp
+        run: |
           set -x
           sudo mkdir -p /data
           sudo chown `id -u`:`id -g` -R /data
           git clone --depth=1 -b 19.03 https://github.com/khs1994-docker/lnmp /data/lnmp
-      - env:
+      - name: Install Laravel
+        env:
           LNMP_PATH: /data/lnmp
           ACTIONS_COMPOSER_BIN_PATH: /home/runner/.composer/vendor/bin
         run: |
