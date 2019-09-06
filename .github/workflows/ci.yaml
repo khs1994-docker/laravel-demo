@@ -21,7 +21,9 @@ jobs:
 
           QUITE=true lnmp-docker
           QUITE=true lnmp-docker compose --official
-          lnmp-laravel new .
+          docker-compose --version
+
+          lnmp-laravel new . --force
       - name: Up
         env:
           LNMP_PATH: /data/lnmp
