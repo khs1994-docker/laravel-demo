@@ -9,7 +9,7 @@
 # !! 搜索 /app/laravel 替换为自己的项目目录 !!
 # 此 Dockerfile 专为 CI 环境设计（国外），请通过 --build-arg ARG=value 设置国内镜像
 #
-# $ docker build --target=laravel --load -t khs1994/laravel:6.0 -f Dockerfile --build-arg NODE_REGISTRY=https://registry.npm.taobao.org --build-arg CI=false .
+# $ docker build --target=laravel -t khs1994/laravel:6.0 --build-arg NODE_REGISTRY=https://registry.npm.taobao.org --build-arg CI=false .
 
 ARG NODE_VERSION=12.10.0
 ARG PHP_VERSION=7.3.9
