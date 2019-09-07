@@ -11,6 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@master
       - uses: docker-practice/actions-setup-docker@master
+      # - uses: khs1994-docker/actions-setup-lnmp@master
       - name: Setup lnmp
         run: |
           set -x
@@ -65,6 +66,8 @@ jobs:
 
           sudo systemctl stop mysql
           lnmp-docker up
+          sleep 30
+          lnmp-docker nginx-cli ls /app/laravel/public
       - name: Connect
         run: |
           set -x
