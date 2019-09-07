@@ -78,7 +78,7 @@ jobs:
           lnmp-docker nginx-cli ls /app/laravel-docker/public || cat /log/nginx/error.log
       - name: New S3 Bucket
         env:
-          mc: docker run --network host -v minio:/root/.mc minio/mc
+          mc: docker run --network host -v minio:/root/.mc minio/mc --insecure
         run: |
           ${mc} config host add minio https://minio.t.khs1994.com khs1994miniokey khs1994miniosecret
           ${mc} config host list minio
@@ -96,7 +96,7 @@ jobs:
           MIRROR_SOURCE: '/home/runner/work/laravel-demo/laravel/public'
           STORAGE_SERVICE_URL: 'https://minio.t.khs1994.com'
           STORAGE_SERVICE_ALIAS: 'minio'
-          mc: docker run --network host -v minio:/root/.mc minio/mc
+          mc: docker run --network host -v minio:/root/.mc minio/mc --insecure
         # with:
         #   args: --overwrite # --remove
         run: |
@@ -108,7 +108,7 @@ jobs:
           ${mc} mirror --overwrite "$MIRROR_SOURCE" "$STORAGE_SERVICE_ALIAS/$MIRROR_TARGET"
       - name: Check S3 files
         env:
-          mc: docker run --network host -v minio:/root/.mc minio/mc
+          mc: docker run --network host -v minio:/root/.mc minio/mc --insecure
         run: |
           ${mc} ls -r minio/laravel
           ${mc} policy set public minio/laravel
