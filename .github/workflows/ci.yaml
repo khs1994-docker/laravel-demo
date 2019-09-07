@@ -67,4 +67,4 @@ jobs:
           docker ps -a
           curl -sSk https://laravel-docker.t.khs1994.com
           curl -sSk https://laravel-docker.t.khs1994.com/test
-          curl -sSk https://laravel-docker.t.khs1994.com/testview
+          curl -sSk https://laravel-docker.t.khs1994.com/test/view

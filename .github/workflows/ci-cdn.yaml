@@ -30,6 +30,17 @@ jobs:
 
           cp $LNMP_PATH/config/nginx/minio.config $LNMP_PATH/config/nginx/minio.conf
           echo "ASSET_URL=https://minio.t.khs1994.com/laravel/asset/" >> $LNMP_PATH/lrew/laravel/.env.development
+
+          cat <<EOF | tee -a $LNMP_PATH/lrew/laravel/.env.development\
+          AWS_ACCESS_KEY_ID=khs1994miniokey\
+          AWS_SECRET_ACCESS_KEY=khs1994miniosecret\
+          AWS_DEFAULT_REGION=us-east-1\
+          AWS_BUCKET=laravel\
+          AWS_USE_PATH_STYLE_ENDPOINT=true\
+          AWS_ENDPOINT=http://minio:9000\
+          EOF
+
+          cat $LNMP_PATH/lrew/laravel/.env.development
       - name: Install Laravel
         env:
           ACTIONS_COMPOSER_BIN_PATH: /home/runner/.composer/vendor/bin
@@ -47,6 +58,8 @@ jobs:
           ls -la laravel/resources/views
           cd laravel
           lnmp-composer require --dev laravel/ui
+          lnmp-composer require league/flysystem
+          lnmp-composer require league/flysystem-aws-s3-v3
           lnmp-php artisan ui vue
       - name: Build Frontend
         run: |
@@ -78,7 +91,7 @@ jobs:
           lnmp-docker nginx-cli ls /app/laravel-docker/public || cat /log/nginx/error.log
       - name: New S3 Bucket
         env:
-          mc: docker run --network host -v minio:/root/.mc minio/mc --insecure
+          mc: docker run --rm --network host -v minio:/root/.mc minio/mc --insecure
         run: |
           ${mc} config host add minio https://minio.t.khs1994.com khs1994miniokey khs1994miniosecret
           ${mc} config host list minio
@@ -96,7 +109,6 @@ jobs:
           MIRROR_SOURCE: '/home/runner/work/laravel-demo/laravel/public'
           STORAGE_SERVICE_URL: 'https://minio.t.khs1994.com'
           STORAGE_SERVICE_ALIAS: 'minio'
-          mc: docker run --network host -v minio:/root/.mc minio/mc --insecure
         # with:
         #   args: --overwrite # --remove
         run: |
@@ -104,11 +116,12 @@ jobs:
           STORAGE_SERVICE_URL=${STORAGE_SERVICE_URL:="https://s3.amazonaws.com"}
           MIRROR_SOURCE=${MIRROR_SOURCE:="."}
 
+          export mc="docker run --rm --network host -v minio:/root/.mc -v $MIRROR_SOURCE:$MIRROR_SOURCE minio/mc --insecure"
           echo "Execute mc mirror"
           ${mc} mirror --overwrite "$MIRROR_SOURCE" "$STORAGE_SERVICE_ALIAS/$MIRROR_TARGET"
       - name: Check S3 files
         env:
-          mc: docker run --network host -v minio:/root/.mc minio/mc --insecure
+          mc: docker run --rm --network host -v minio:/root/.mc minio/mc --insecure
         run: |
           ${mc} ls -r minio/laravel
           ${mc} policy set public minio/laravel
@@ -119,4 +132,5 @@ jobs:
           docker ps -a
           curl -sSk https://laravel-docker.t.khs1994.com
           curl -sSk https://laravel-docker.t.khs1994.com/test
-          curl -sSk https://laravel-docker.t.khs1994.com/testview
+          curl -sSk https://laravel-docker.t.khs1994.com/test/view
+          curl -sSk https://laravel-docker.t.khs1994.com/test/s3
