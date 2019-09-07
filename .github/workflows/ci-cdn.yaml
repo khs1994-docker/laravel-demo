@@ -19,10 +19,12 @@ jobs:
           lrew_include: "laravel minio"
       - name: Init LNMP
         run: |
+          set -x
           lnmp-docker services
           docker-compose --version
       - name: Setup S3(Minio)
         run: |
+          set -x
           echo "MINIO_ACCESS_KEY=khs1994miniokey" >> $LNMP_PATH/.env
           echo "MINIO_SECRET_KEY=khs1994miniosecret" >> $LNMP_PATH/.env
           echo "MINIO_REGION=us-east-1" >> $LNMP_PATH/.env
@@ -31,13 +33,13 @@ jobs:
           cp $LNMP_PATH/config/nginx/minio.config $LNMP_PATH/config/nginx/minio.conf
           echo "ASSET_URL=https://minio.t.khs1994.com/laravel/asset/" >> $LNMP_PATH/lrew/laravel/.env.development
 
-          cat <<EOF | tee -a $LNMP_PATH/lrew/laravel/.env.development\
-          AWS_ACCESS_KEY_ID=khs1994miniokey\
-          AWS_SECRET_ACCESS_KEY=khs1994miniosecret\
-          AWS_DEFAULT_REGION=us-east-1\
-          AWS_BUCKET=laravel\
-          AWS_USE_PATH_STYLE_ENDPOINT=true\
-          AWS_ENDPOINT=http://minio:9000\
+          cat <<EOF | tee -a $LNMP_PATH/lrew/laravel/.env.development \
+          AWS_ACCESS_KEY_ID=khs1994miniokey \
+          AWS_SECRET_ACCESS_KEY=khs1994miniosecret \
+          AWS_DEFAULT_REGION=us-east-1 \
+          AWS_BUCKET=laravel \
+          AWS_USE_PATH_STYLE_ENDPOINT=true \
+          AWS_ENDPOINT=http://minio:9000 \
           EOF
 
           cat $LNMP_PATH/lrew/laravel/.env.development
@@ -93,6 +95,7 @@ jobs:
         env:
           mc: docker run --rm --network host -v minio:/root/.mc minio/mc --insecure
         run: |
+          set -x
           ${mc} config host add minio https://minio.t.khs1994.com khs1994miniokey khs1994miniosecret
           ${mc} config host list minio
           ${mc} mb minio/laravel
@@ -112,6 +115,7 @@ jobs:
         # with:
         #   args: --overwrite # --remove
         run: |
+          set -x
           STORAGE_SERVICE_ALIAS=${STORAGE_SERVICE_ALIAS:="s3"}
           STORAGE_SERVICE_URL=${STORAGE_SERVICE_URL:="https://s3.amazonaws.com"}
           MIRROR_SOURCE=${MIRROR_SOURCE:="."}
@@ -123,6 +127,7 @@ jobs:
         env:
           mc: docker run --rm --network host -v minio:/root/.mc minio/mc --insecure
         run: |
+          set -x
           ${mc} ls -r minio/laravel
           ${mc} policy set public minio/laravel
           ${mc} policy get minio/laravel
