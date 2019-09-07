@@ -33,7 +33,12 @@ jobs:
           cd ..
           lnmp-laravel-by-composer new laravel 6.0
           cp -r laravel-demo/{.dockerignore,Dockerfile,Dockerfile.buildkit} laravel/
+          cp -r laravel-demo/.test/* laravel/
           ls -la laravel
+          ls -la laravel/resources/views
+          cd laravel
+          lnmp-composer require laravel/ui
+          lnmp-php artisan ui vue
       - name: Test Laravel
         run: |
           set -x
@@ -54,10 +59,12 @@ jobs:
 
           lnmp-docker up
           sleep 30
-          lnmp-docker nginx-cli ls /app/laravel/public
+          lnmp-docker nginx-cli ls /app/laravel-docker/public
       - name: Connect
         run: |
           set -x
           sleep 30
           docker ps -a
-          curl -k https://laravel-docker.t.khs1994.com
+          curl -sSk https://laravel-docker.t.khs1994.com
+          curl -sSk https://laravel-docker.t.khs1994.com/test
+          curl -sSk https://laravel-docker.t.khs1994.com/testview
