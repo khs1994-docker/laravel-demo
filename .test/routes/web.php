@@ -13,5 +13,5 @@ Route::get('/test/view', function () {
 });
 
 Route::get('/test/s3', function () {
-    return Storage::disk('s3')->directories(null, true);
+    return Storage::disk('s3')->allFiles();
 });

@@ -19,6 +19,7 @@ jobs:
           lrew_include: "laravel"
       - name: Init LNMP
         run: |
+          set -x
           lnmp-docker services
           docker-compose --version
       - name: Install Laravel

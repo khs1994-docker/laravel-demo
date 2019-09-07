@@ -90,7 +90,7 @@ jobs:
 
           lnmp-docker up
           sleep 30
-          lnmp-docker nginx-cli ls /app/laravel-docker/public || cat /log/nginx/error.log
+          lnmp-docker nginx-cli ls /app/laravel-docker/public || cat $LNMP_PATH/log/nginx/error.log
       - name: New S3 Bucket
         env:
           mc: docker run --rm --network host -v minio:/root/.mc minio/mc --insecure
