@@ -33,13 +33,13 @@ jobs:
           cp $LNMP_PATH/config/nginx/minio.config $LNMP_PATH/config/nginx/minio.conf
           echo "ASSET_URL=https://minio.t.khs1994.com/laravel/asset/" >> $LNMP_PATH/lrew/laravel/.env.development
 
-          cat <<EOF | tee -a $LNMP_PATH/lrew/laravel/.env.development \
-          AWS_ACCESS_KEY_ID=khs1994miniokey \
-          AWS_SECRET_ACCESS_KEY=khs1994miniosecret \
-          AWS_DEFAULT_REGION=us-east-1 \
-          AWS_BUCKET=laravel \
-          AWS_USE_PATH_STYLE_ENDPOINT=true \
-          AWS_ENDPOINT=http://minio:9000 \
+          cat <<EOF | tee -a $LNMP_PATH/lrew/laravel/.env.development
+          AWS_ACCESS_KEY_ID=khs1994miniokey
+          AWS_SECRET_ACCESS_KEY=khs1994miniosecret
+          AWS_DEFAULT_REGION=us-east-1
+          AWS_BUCKET=laravel
+          AWS_USE_PATH_STYLE_ENDPOINT=true
+          AWS_ENDPOINT=http://minio:9000
           EOF
 
           cat $LNMP_PATH/lrew/laravel/.env.development
