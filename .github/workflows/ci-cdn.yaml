@@ -69,13 +69,13 @@ jobs:
           set -x
           cd ../laravel
           docker buildx build --load --target=laravel -t khs1994/laravel:6.0 -f Dockerfile.backend .
-      - name: Up
+      - name: Up LNMP
         run: |
           set -x
 
           lnmp-docker up
           sleep 30
-          lnmp-docker nginx-cli ls /app/laravel-docker/public
+          lnmp-docker nginx-cli ls /app/laravel-docker/public || cat /log/nginx/error.log
       - name: New S3 Bucket
         env:
           mc: docker run --network host -v minio:/root/.mc minio/mc
@@ -83,7 +83,7 @@ jobs:
           ${mc} config host add minio https://minio.t.khs1994.com khs1994miniokey khs1994miniosecret
           ${mc} config host list minio
           ${mc} mb minio/laravel
-      - name: Upload to CDN
+      - name: Upload to S3(CDN)
         # 由于测试项目的 S3 位于本地，不能使用直接使用 actions
         # 若 S3 位于公网，则可以使用
         # uses: peter-evans/s3-backup@v1.0.0
