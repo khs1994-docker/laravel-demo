@@ -30,7 +30,8 @@ jobs:
         run: |
           set -x
           command -v docker-compose
-          export PATH=$ACTIONS_COMPOSER_BIN_PATH:$PATH
+          docker-compose --version
+          
           command -v docker-compose
           lnmp-composer config -g --unset repos.packagist
 
