@@ -29,8 +29,9 @@ jobs:
           ACTIONS_COMPOSER_BIN_PATH: /home/runner/.composer/vendor/bin
         run: |
           set -x
+          command -v docker-compose
           export PATH=$ACTIONS_COMPOSER_BIN_PATH:$PATH
-
+          command -v docker-compose
           lnmp-composer config -g --unset repos.packagist
 
           cd ..
