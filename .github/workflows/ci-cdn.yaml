@@ -69,6 +69,9 @@ jobs:
           ls -la laravel
           ls -la laravel/resources/views
           cd laravel
+
+          patch -p1 < ../laravel-demo/cdn-patch/config-app.patch
+
           lnmp-composer require --dev laravel/ui
           lnmp-composer require league/flysystem
           lnmp-composer require league/flysystem-aws-s3-v3
