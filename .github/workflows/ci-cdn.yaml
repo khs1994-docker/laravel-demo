@@ -62,7 +62,7 @@ jobs:
           cd ..
           lnmp-laravel new laravel 7
 
-          cp -r laravel-demo/{Dockerfile.cdn} laravel/
+          cp -r laravel-demo/Dockerfile.cdn laravel/
           cp -r laravel-demo/.patch/* laravel/
           patch -p1 < laravel-demo/cdn-patch/config-app.patch
 
