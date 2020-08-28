@@ -47,7 +47,7 @@ COPY database/ /app/database/
 ARG CI=true
 
 RUN set -x ; cd /app \
-      &&       && composer config -g repos.packagist composer https://mirrors.aliyun.com/composer/ \
+      && composer config -g repos.packagist composer https://mirrors.aliyun.com/composer/ \
       && if [ $CI = 'true' ];then composer config -g --unset repos.packagist; fi \
       && composer install --no-dev \
              --ignore-platform-reqs \
