@@ -32,6 +32,7 @@ RUN set -x ; cd /app \
 COPY resources/ /app/resources/
 
 RUN set -x ; cd /app \
+# File.exists('./artisan'); 如果 artisan 文件存在，则说明是 laravel 项目
       && touch artisan \
       && mkdir -p public \
       # && yarn production \

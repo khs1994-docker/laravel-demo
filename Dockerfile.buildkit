@@ -39,6 +39,7 @@ COPY resources/ /app/resources/
 RUN --mount=type=cache,target=/app/node_modules,id=laravel-docker_node_modules \
       set -x ; \
       cd /app \
+# File.exists('./artisan'); 如果 artisan 文件存在，则说明是 laravel 项目
       && touch artisan \
       && mkdir -p public \
       # && yarn production \
