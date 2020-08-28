@@ -123,6 +123,6 @@ jobs:
           curl -k https://laravel-docker.t.khs1994.com/test/view
           curl -k https://laravel-docker.t.khs1994.com/test/s3
 
-          docker run -it --rm --entrypoint=sh khs1994/laravel:7 -c "ls -la /app/laravel-docker"
-      # - name: Setup tmate session
-      #   uses: mxschmitt/action-tmate@v2
+          docker run -i --rm --entrypoint=sh khs1994/laravel:7 -c "ls -la /app/laravel-docker"
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v2
