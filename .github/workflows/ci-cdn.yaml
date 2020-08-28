@@ -36,7 +36,6 @@ jobs:
           echo "MINIO_BROWSER=off" >> $LNMP_PATH/.env
 
           cp $LNMP_PATH/config/nginx/minio.config $LNMP_PATH/config/nginx/minio.conf
-          patch -p1 < cdn-patch/config-app.patch
 
           echo "ASSET_URL=https://minio.t.khs1994.com/laravel-docker/frontend-assets" \
               >> $LNMP_PATH/lrew/laravel/.env.development
@@ -62,8 +61,11 @@ jobs:
 
           cd ..
           lnmp-laravel new laravel 7
+
           cp -r laravel-demo/{Dockerfile.cdn} laravel/
           cp -r laravel-demo/.patch/* laravel/
+          patch -p1 < laravel-demo/cdn-patch/config-app.patch
+
           ls -la laravel
           ls -la laravel/resources/views
           cd laravel
