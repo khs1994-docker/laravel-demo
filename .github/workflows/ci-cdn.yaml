@@ -106,8 +106,8 @@ jobs:
           set -x
 
           { \
-            echo "LNMP_SERVICES=nginx mysql php7 redis minio laravel";\
-            echo "LREW_INCLUDE=minio laravel";\
+            echo "LNMP_SERVICES='nginx mysql php7 redis minio laravel'";\
+            echo "LREW_INCLUDE='minio laravel'";\
           } | tee -a $LNMP_PATH/.env
 
           lnmp-docker up
@@ -122,5 +122,5 @@ jobs:
           curl -k https://laravel-docker.t.khs1994.com/test
           curl -k https://laravel-docker.t.khs1994.com/test/view
           curl -k https://laravel-docker.t.khs1994.com/test/s3
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v2
+      # - name: Setup tmate session
+      #   uses: mxschmitt/action-tmate@v2
