@@ -19,7 +19,7 @@ yarn-error.log
 .gitignore
 .styleci.yml
 
-Dockerfile.buildkit
+Dockerfile.*
 Dockerfile
 
 bootstrap/cache/*
@@ -32,3 +32,9 @@ phpunit.xml
 .env.*
 
 server.php
+
+README.md
+
+.php_cs
+
+stubs
