@@ -1,3 +1,0 @@
-#!/usr/bin/env sh
-
-cd /app/laravel-docker && exec php artisan queue:work
