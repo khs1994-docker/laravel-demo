@@ -72,8 +72,6 @@ jobs:
           patch -p1 < ../laravel-demo/cdn-patch/config-app.patch
           patch -p1 < ../laravel-demo/patch/app-console-kernel.patch
 
-          lnmp-php artisan --version
-
           lnmp-composer require laravel/ui
           lnmp-composer require league/flysystem
           lnmp-composer require league/flysystem-aws-s3-v3

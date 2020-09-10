@@ -47,8 +47,6 @@ jobs:
 
           patch -p1 < ../laravel-demo/patch/app-console-kernel.patch
 
-          lnmp-php artisan --version
-
           lnmp-composer require laravel/ui
           # 此步骤会重置 webpack.mix.js
           lnmp-php artisan ui vue --auth
