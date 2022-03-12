@@ -22,4 +22,4 @@ cp -af ${APP_PATH}/public/. ${APP_PATH}-public-volume
 
 # exec
 # exec $@
-exec /command/s6-svscan -t0 $APP_PATH/.docker-rootless/s6
+exec s6-svscan -t0 $APP_PATH/.docker-rootless/s6
