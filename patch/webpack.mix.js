@@ -24,6 +24,8 @@ mix.js('resources/js/app.js', 'public/js').vue()
 //     mix.version();
 // }
 
+mix.version();
+
 mix.then(() => {
   const convertToFileHash = require("laravel-mix-make-file-hash");
   convertToFileHash({

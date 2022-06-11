@@ -73,6 +73,9 @@ jobs:
           lnmp-npm install
           lnmp-npm install laravel-mix-make-file-hash --save
           lnmp-npm run dev
+
+          ls public/js
+          ls public/css
       - name: Test Laravel
         run: |
           cd ../laravel
