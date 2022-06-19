@@ -84,18 +84,21 @@ jobs:
       - name: Build Docker Image
         env:
           DOCKER_CLI_EXPERIMENTAL: enabled
+          EVENT_NAME: ${{ github.event_name }}
         run: |
           cd ../laravel
           docker buildx build --load \
               --build-arg NODE_REGISTRY=https://registry.npmjs.org \
               --target=laravel \
               -t khs1994/laravel:9 \
+              $(if [ $EVENT_NAME = 'push' ];then echo --push;fi) \
               -f Dockerfile.buildkit .
 
           docker buildx build --load \
               --build-arg NODE_REGISTRY=https://registry.npmjs.org \
               --target=laravel-rootless \
               -t khs1994/laravel:9-rootless \
+              $(if [ $EVENT_NAME = 'push' ];then echo --push;fi) \
               -f Dockerfile.buildkit .
       - name: Up LNMP
         run: |
