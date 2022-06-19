@@ -91,15 +91,18 @@ jobs:
               --build-arg NODE_REGISTRY=https://registry.npmjs.org \
               --target=laravel \
               -t khs1994/laravel:9 \
-              $(if [ $EVENT_NAME = 'push' ];then echo --push;fi) \
               -f Dockerfile.buildkit .
 
           docker buildx build --load \
               --build-arg NODE_REGISTRY=https://registry.npmjs.org \
               --target=laravel-rootless \
               -t khs1994/laravel:9-rootless \
-              $(if [ $EVENT_NAME = 'push' ];then echo --push;fi) \
               -f Dockerfile.buildkit .
+
+          if [ $EVENT_NAME = 'push' ];then
+            docker push khs1994/laravel:9
+            docker push khs1994/laravel:9-rootless
+          fi
       - name: Up LNMP
         run: |
           lnmp-docker up
